@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using ParkingEx3.Models;
 
 namespace ParkingEx3.Controllers
 {
+    [Authorize]
     public class ReservasController : Controller
     {
         private readonly Contexto _context;
@@ -74,6 +77,7 @@ namespace ParkingEx3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UsuarioId,PlazaId,FechaInicio,FechaFin,Horas,Precio,PrecioFinal,Estado")] Reservas reservas)
         {
+            
             if (ModelState.IsValid)
             {
                 _context.Add(reservas);

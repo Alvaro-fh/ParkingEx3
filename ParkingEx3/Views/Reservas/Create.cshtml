@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UsuarioId" class="control-label"></label>
@@ -75,6 +75,17 @@
             precioFinalInput.value = precioFinal;
         }
         document.getElementById('Horas').addEventListener('change', calcularPrecioFinal);
+        function confirmar() {
+            var usu = document.getElementById('UsuarioId').value;
+            var plaza = document.getElementById('PlazaId').value;
+            var horas = document.getElementById('Horas').value;
+            var precioFinal = document.getElementById('PrecioFinal').value;
+            var datos = "Ususario: " + usu + "\n" + "Plaza: " + plaza + "\n" + "Horas: " + horas  + "\n" + "Precio Final: " + precioFinal;
+            console.log(datos);
+            alert("DETALLES DE LA RESERVA" + "\n" + datos);
+
+        }
+        form.addEventListener("submit", confirmar);
 
     </script>
 }

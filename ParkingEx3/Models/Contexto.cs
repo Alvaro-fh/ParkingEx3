@@ -11,8 +11,8 @@ namespace ParkingEx3.Models
         }
 
         public DbSet<Usuarios> Usuarios { get; set; }
-        public DbSet<Vehiculos> Vehiculos { get; set; } 
-        public DbSet<Alquileres> Alquileres { get; set; }
+        public DbSet<Plazas> Plazas { get; set; } 
+        public DbSet<Reservas> Reservas { get; set; }
 
         
     }

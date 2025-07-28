@@ -9,23 +9,22 @@ using ParkingEx3.Models;
 
 namespace ParkingEx3.Controllers
 {
-    public class AlquileresController : Controller
+    public class PlazasController : Controller
     {
         private readonly Contexto _context;
 
-        public AlquileresController(Contexto context)
+        public PlazasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Alquileres
+        // GET: Plazas
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.Alquileres.Include(a => a.Usuario).Include(a => a.Vehiculo);
-            return View(await contexto.ToListAsync());
+            return View(await _context.Plazas.ToListAsync());
         }
 
-        // GET: Alquileres/Details/5
+        // GET: Plazas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,45 +32,38 @@ namespace ParkingEx3.Controllers
                 return NotFound();
             }
 
-            var alquileres = await _context.Alquileres
-                .Include(a => a.Usuario)
-                .Include(a => a.Vehiculo)
+            var plazas = await _context.Plazas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (alquileres == null)
+            if (plazas == null)
             {
                 return NotFound();
             }
 
-            return View(alquileres);
+            return View(plazas);
         }
 
-        // GET: Alquileres/Create
+        // GET: Plazas/Create
         public IActionResult Create()
         {
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id");
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id");
             return View();
         }
 
-        // POST: Alquileres/Create
+        // POST: Plazas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UsuarioId,VehiculoId,FechaInicio,FechaFin,Precio,PrecioFinal,Estado")] Alquileres alquileres)
+        public async Task<IActionResult> Create([Bind("Id,Estado")] Plazas plazas)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(alquileres);
+            
+                _context.Add(plazas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id", alquileres.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", alquileres.VehiculoId);
-            return View(alquileres);
+            
+            return View(plazas);
         }
 
-        // GET: Alquileres/Edit/5
+        // GET: Plazas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,24 +71,22 @@ namespace ParkingEx3.Controllers
                 return NotFound();
             }
 
-            var alquileres = await _context.Alquileres.FindAsync(id);
-            if (alquileres == null)
+            var plazas = await _context.Plazas.FindAsync(id);
+            if (plazas == null)
             {
                 return NotFound();
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id", alquileres.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", alquileres.VehiculoId);
-            return View(alquileres);
+            return View(plazas);
         }
 
-        // POST: Alquileres/Edit/5
+        // POST: Plazas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UsuarioId,VehiculoId,FechaInicio,FechaFin,Precio,PrecioFinal,Estado")] Alquileres alquileres)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Estado")] Plazas plazas)
         {
-            if (id != alquileres.Id)
+            if (id != plazas.Id)
             {
                 return NotFound();
             }
@@ -105,12 +95,12 @@ namespace ParkingEx3.Controllers
             {
                 try
                 {
-                    _context.Update(alquileres);
+                    _context.Update(plazas);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlquileresExists(alquileres.Id))
+                    if (!PlazasExists(plazas.Id))
                     {
                         return NotFound();
                     }
@@ -121,12 +111,10 @@ namespace ParkingEx3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id", alquileres.UsuarioId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", alquileres.VehiculoId);
-            return View(alquileres);
+            return View(plazas);
         }
 
-        // GET: Alquileres/Delete/5
+        // GET: Plazas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,36 +122,34 @@ namespace ParkingEx3.Controllers
                 return NotFound();
             }
 
-            var alquileres = await _context.Alquileres
-                .Include(a => a.Usuario)
-                .Include(a => a.Vehiculo)
+            var plazas = await _context.Plazas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (alquileres == null)
+            if (plazas == null)
             {
                 return NotFound();
             }
 
-            return View(alquileres);
+            return View(plazas);
         }
 
-        // POST: Alquileres/Delete/5
+        // POST: Plazas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var alquileres = await _context.Alquileres.FindAsync(id);
-            if (alquileres != null)
+            var plazas = await _context.Plazas.FindAsync(id);
+            if (plazas != null)
             {
-                _context.Alquileres.Remove(alquileres);
+                _context.Plazas.Remove(plazas);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlquileresExists(int id)
+        private bool PlazasExists(int id)
         {
-            return _context.Alquileres.Any(e => e.Id == id);
+            return _context.Plazas.Any(e => e.Id == id);
         }
     }
 }

@@ -36,6 +36,6 @@ namespace ParkingEx3.Models
         [StringLength(50)]
         public string? Estado { get; set; }
 
-        public ICollection<Alquileres>? Alquileres { get; set; }
+        public ICollection<Reservas>? Reservas { get; set; }
     }
 }

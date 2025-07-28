@@ -33,9 +33,42 @@ namespace ParkingEx3.Controllers
                     return RedirectToAction("Edit", "Usuarios", new { id = usuario.Id });
                 }
             }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
 
+            var mailUsuarioActivo = User.Identity.Name;
+
+            var usu = _context.Usuarios
+                            .Where(e => e.Email == email)
+                            .Select(e => e.Id)
+                            .FirstOrDefault();
+
+            var contexto = _context.Reservas.Include(r => r.Plaza).Include(r => r.Usuario);
+            /*return View(await contexto
+                .Where(c => c.Estado == "Activa" && c.UsuarioId == usu)
+                .ToListAsync());*/
+
+            return View("IndexAuth", contexto.Where(c => c.Estado == "Activa" && c.UsuarioId == usu).ToList());
+
+
+           
+        }
+        public async Task<IActionResult> Historial()
+        {
+            string email = User.Identity?.Name;
             
-            return View();
+            
+            var usuario = _context.Usuarios
+                            .Where(e => e.Email == email)
+                            .Select(e => e.Id)
+                            .FirstOrDefault();
+
+            var contexto = _context.Reservas.Include(r => r.Plaza).Include(r => r.Usuario);
+            return View(await contexto
+                .Where(c => c.Estado == "Finalizado" && c.UsuarioId == usuario)
+                .ToListAsync());
         }
 
         public IActionResult Privacy()

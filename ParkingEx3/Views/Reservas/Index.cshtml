@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ParkingEx3.Models.Alquileres>
+﻿@model IEnumerable<ParkingEx3.Models.Reservas>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.FechaFin)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Horas)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
             <th>
@@ -31,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Usuario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
+                @Html.DisplayNameFor(model => model.Plaza)
             </th>
             <th></th>
         </tr>
@@ -46,6 +49,9 @@
                 @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Horas)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Precio)
             </td>
             <td>
@@ -58,12 +64,12 @@
                 @Html.DisplayFor(modelItem => item.Usuario.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Id)
+                @Html.DisplayFor(modelItem => item.Plaza.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Fichar Salida</a>
             </td>
         </tr>
 }

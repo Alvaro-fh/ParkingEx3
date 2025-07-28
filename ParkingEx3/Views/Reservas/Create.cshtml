@@ -1,4 +1,4 @@
-﻿@model ParkingEx3.Models.Alquileres
+﻿@model ParkingEx3.Models.Reservas
 
 @{
     ViewData["Title"] = "Create";
@@ -6,7 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>Alquileres</h4>
+<h4>Reservas</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,35 +14,41 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class ="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <input readonly asp-for="UsuarioId" class="form-control" value="@ViewBag.usu"/>
             </div>
+
             <div class="form-group">
-                <label asp-for="VehiculoId" class="control-label"></label>
-                <select asp-for="VehiculoId" class ="form-control" asp-items="ViewBag.VehiculoId"></select>
+                <label asp-for="PlazaId" class="control-label"></label>
+                <select asp-for="PlazaId" class="form-control" asp-items="ViewBag.PlazaId"></select>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="FechaInicio" class="control-label"></label>
                 <input asp-for="FechaInicio" class="form-control" />
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div> *@
+            @* <div class="form-group">
                 <label asp-for="FechaFin" class="control-label"></label>
                 <input asp-for="FechaFin" class="form-control" />
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
+                <input readonly asp-for="Precio" class="form-control" value="20" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Horas" class="control-label"></label>
+                <input asp-for="Horas" class="form-control" />
+                <span asp-validation-for="Horas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PrecioFinal" class="control-label"></label>
-                <input asp-for="PrecioFinal" class="form-control" />
+                <input readonly asp-for="PrecioFinal" class="form-control" />
                 <span asp-validation-for="PrecioFinal" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
+                <label hidden asp-for="Estado" class="control-label"></label>
+                <input hidden asp-for="Estado" class="form-control" value="Activa"/>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -57,5 +63,18 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function calcularPrecioFinal() {
+            var precioFinalInput = document.getElementById('PrecioFinal');
+            var precio = document.getElementById('Precio').value;
+            var horas = document.getElementById('Horas').value;
+            var precioFinal = precio * horas;
+            precioFinalInput.value = precioFinal;
+        }
+        document.getElementById('Horas').addEventListener('change', calcularPrecioFinal);
+
+    </script>
 }

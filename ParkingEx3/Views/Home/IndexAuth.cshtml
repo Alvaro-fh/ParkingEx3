@@ -1,0 +1,45 @@
+﻿@model List<Reservas>
+@{
+    ViewData["Title"] = "Mis Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- Contenido principal -->
+<main id="mainContent" class="container-fluid p-4" style="padding-top: 56px;">
+    <h2>Tus Reservas</h2>
+    <div class="row">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var reserva in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 d-flex flex-column">
+                        <div class="card-body flex-grow-1">
+                            <h5 class="card-title">@reserva.FechaInicio</h5>
+                            <p class="card-text">NºPlaza: @reserva.PlazaId</p>
+                            <p class="card-text">Horas: @reserva.Horas h.</p>
+                            <p class="card-text">Precio: @reserva.PrecioFinal eur.</p>
+                        </div>
+                        <div class="card-footer d-flex gap-2 flex-wrap">
+                            <a asp-controller="Reservas" asp-action="Delete" asp-route-id="@reserva.Id" class="btn btn-dark btn-sm flex-fill">Fichar salida</a>
+                            <a asp-controller="Reservas" asp-action="Edit" asp-route-id="@reserva.Id" class="btn btn-dark btn-sm flex-fill">Editar Reserva</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-muted">No tienes Reservas Activas.</p>
+            </div>
+        }
+    </div>
+</main>
+
+@section Scripts {
+    
+    </script>
+}

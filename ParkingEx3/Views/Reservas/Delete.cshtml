@@ -1,13 +1,14 @@
-﻿@model ParkingEx3.Models.Alquileres
+﻿@model ParkingEx3.Models.Reservas
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
-<h1>Details</h1>
+<h1>Fichar Salida</h1>
 
+<h3>Estas seguro?</h3>
 <div>
-    <h4>Alquileres</h4>
+    <h4>Reservas</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -21,6 +22,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FechaFin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Horas)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Horas)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Precio)
@@ -47,14 +54,16 @@
             @Html.DisplayFor(model => model.Usuario.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehiculo)
+            @Html.DisplayNameFor(model => model.Plaza)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vehiculo.Id)
+            @Html.DisplayFor(model => model.Plaza.Id)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Fichar Salida" class="btn btn-danger" /> |
+        <a asp-controller="Home" asp-action="Index">Back to List</a>
+    </form>
 </div>

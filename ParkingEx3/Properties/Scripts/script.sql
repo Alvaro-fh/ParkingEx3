@@ -23,10 +23,11 @@ CREATE TABLE alquileres(
     id INT IDENTITY(1,1) PRIMARY KEY,
     idusu INT,
     idveh INT,
-    fecini DATETIME,
+    fecini DATETIME NOT NULL DEFAULT SYSUTCDATETIME(),
     fecfin DATETIME,
     precio DECIMAL (5,2),
     prefin DECIMAL (5,2),
+	horas INT,
     estado VARCHAR(50),
     CONSTRAINT alquileres_fk1 FOREIGN KEY (idusu) REFERENCES usuarios(id),
     CONSTRAINT alquileres_fk2 FOREIGN KEY (idveh) REFERENCES vehiculos(id)
